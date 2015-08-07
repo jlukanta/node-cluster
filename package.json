@@ -6,6 +6,8 @@
     "install": "^0.1.8",
     "npm": "^2.13.3",
     "socket.io": "^1.3.6",
-    "sticky-session": "^0.1.0"
+    "socket.io-redis": "^0.1.4",
+    "sticky-session": "^0.1.0",
+    "string-hash": "^1.1.0"
   }
 }
