@@ -58,7 +58,7 @@ if (cluster.isMaster) {
 
     // Here you might use middleware, attach routes, etc.
     app.get('/', function(req, res) {
-      res.send('Hello from Worker ' + cluster.worker.id);
+      res.sendFile(__dirname + '/index.html');
     });
 
     // Don't expose our internal server to the outside.
@@ -71,6 +71,18 @@ if (cluster.isMaster) {
     io.adapter(sio_redis({ host: 'localhost', port: 6379 }));
 
     // Here you might use Socket.IO middleware for authorization etc.
+    io.on('connection', function(socket){
+      console.log('a user connected');
+      
+      socket.on('chat message', function(msg){
+        console.log('message: ' + msg);
+        io.emit('chat message', msg);
+      });
+
+      socket.on('disconnect', function(){
+        console.log('user disconnected');
+      });
+    });
 
     // Listen to messages sent from the master. Ignore everything else.
     process.on('message', function(message, connection) {
